@@ -15,6 +15,7 @@ ReactDOMRoot.prototype.render = function (children) {
   updateContainer(children, root);
 };
 
+// 初次渲染 组件到g根dom节点上
 function updateContainer(element, container) {
   const { containerInfo } = container;
   const fiber = createFiber(element, {

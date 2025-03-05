@@ -2,7 +2,6 @@ import createFiber from "./ReactFiber";
 import { isArray, isStringOrNumber, updateNode } from "./utils";
 
 export function updateHostComponent(wip) {
-  console.log(wip, wip.props, "wip.props");
   if (!wip.stateNode) {
     wip.stateNode = document.createElement(wip.type);
     updateNode(wip.stateNode, wip.props);

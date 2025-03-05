@@ -12,7 +12,7 @@ import {
   updateHostComponent,
   updateHostTextComponent,
 } from "./ReactFiberReconciler";
-import { isFn, Placement } from "./utils";
+import { Placement } from "./utils";
 let wip = null; // work in progress 正在工作中的任务(fiber)
 let wipRoot = null; // 记录一下根fiber 方便追加
 
@@ -65,6 +65,7 @@ function workLoop(IdleDeadline) {
   // 断点之后  IdleDeadline.timeRemaining() 就是 0了 ？
   console.log(IdleDeadline.timeRemaining(), "IdleDeadline.timeRemaining()");
 
+  // 最后wip 不满足终止循环
   while (wip && IdleDeadline.timeRemaining() > 0) {
     performUnitOfWork();
   }
@@ -103,6 +104,7 @@ function commitWork(wip) {
 
 function getParentNode(wip) {
   let next = wip;
+  // next 最终会找到root根节点 return退出循环
   while (next) {
     if (next.stateNode) {
       return next.stateNode;
