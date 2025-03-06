@@ -28,14 +28,33 @@ export function isUndefined(a) {
   return a === undefined;
 }
 
-export function updateNode(vnode, props) {
-  Object.keys(props).forEach((k) => {
+export function updateNode(vnode, prevVal, nextVal) {
+  // 先移除旧节点上的属性
+  Object.keys(prevVal).forEach((k) => {
     if (k === "children") {
-      if (isStringOrNumber(props[k])) {
-        vnode.textContent = props[k];
+      if (isStringOrNumber(prevVal[k])) {
+        vnode.textContent = "";
       }
+    } else if (k.slice(0, 2) === "on") {
+      // 绑定了事件 good...
+      const method = k.slice(2).toLocaleLowerCase();
+      vnode.removeEventListener(method, prevVal[k]);
+    } else if (!k in prevVal) {
+      vnode[k] = "";
+    }
+  });
+  // (单独下面的适用于初次渲染）
+  Object.keys(nextVal).forEach((k) => {
+    if (k === "children") {
+      if (isStringOrNumber(nextVal[k])) {
+        vnode.textContent = nextVal[k];
+      }
+    } else if (k.slice(0, 2) === "on") {
+      // 绑定了事件 good...
+      const method = k.slice(2).toLocaleLowerCase();
+      vnode.addEventListener(method, nextVal[k]);
     } else {
-      vnode[k] = props[k];
+      vnode[k] = nextVal[k];
     }
   });
 }

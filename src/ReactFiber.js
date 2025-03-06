@@ -18,10 +18,12 @@ function createFiber(vnode, returnFiber) {
     return: returnFiber, // 父节点
     // 标记节点是什么类型的
     flags: Placement,
-    // 老节点
-    alternate: null,
     deletions: null, // 要删除子节点 null或者[]
     index: null, //当前层级下的下标，从0开始
+    // 记录上一次的状态 函数组件和类组件不一样
+    memorizedState: null,
+    // old fiber
+    alternate: null,
   };
 
   const { type } = vnode;
