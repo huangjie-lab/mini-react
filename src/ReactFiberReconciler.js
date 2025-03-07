@@ -7,7 +7,7 @@ export function updateHostComponent(wip) {
     wip.stateNode = document.createElement(wip.type);
     updateNode(wip.stateNode, {}, wip.props);
   }
-  // 子节点
+  // 协调子节点
   reconcileChildren(wip, wip.props.children);
 }
 export function updateFunctionComponent(wip) {
