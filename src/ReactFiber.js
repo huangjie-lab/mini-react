@@ -37,7 +37,6 @@ function createFiber(vnode, returnFiber) {
     // todo ... 函数组件或者是类组件
     fiber.tag = type.prototype.isComponent ? ClassComponent : FunctionComponent;
   } else if (isUndefined(type)) {
-    // 为啥此处文本就是vnode ? todo ...
     console.log(vnode, "fiber hosttext");
     fiber.tag = HostText;
     fiber.props = { children: vnode };
